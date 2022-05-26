@@ -171,7 +171,11 @@ jobs:
       - run:
           name: Check Frontend against security vulnerabilities
           working_directory: ./frontend
-          command: npm audit --audit-level=critical
+          command: |
+                npm install
+                npm audit fix --audit-level=critical --force
+            #npm install oauth-sign@^0.9.0
+                npm audit --audit-level=critical  
 
 
   scan-backend:
@@ -183,7 +187,13 @@ jobs:
       - run:
           name: Check Backend against security vulnerabilities
           working_directory: ./backend
-          command: npm audit --audit-level=critical
+          command: 
+                cd backend
+                npm install
+                npm audit fix
+        #npm install oauth-sign@^0.9.0
+                npm audit fix --audit-level=critical --force
+                npm audit --audit-level=critical
 
 
   deploy-infrastructure:
