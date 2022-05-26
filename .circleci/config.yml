@@ -489,8 +489,6 @@ workflows:
       - scan-frontend:
           requires:
             - build-frontend
-
-      ## INFRASTRUCTURE
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       - configure_infrastructure:
