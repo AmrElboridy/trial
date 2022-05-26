@@ -94,6 +94,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-deps]
       - attach_workspace:
           at: .
       - run:
@@ -104,24 +106,32 @@ jobs:
           root: .
           paths:
             - backend/dist
-
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-deps
 
   build-frontend:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-deps]
       - attach_workspace:
           at: .
       - run:
           name: npm run build
           working_directory: ./frontend
           command: npm run build
-
+     - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-deps
 
   test-frontend:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-deps]
       - attach_workspace:
           at: .
       - run:
@@ -144,6 +154,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-deps]
       - attach_workspace:
           at: .
       - run:
@@ -166,6 +178,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-deps]
       - attach_workspace:
           at: .
       - run:
@@ -181,6 +195,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-deps]
       - attach_workspace:
           at: .
       - run:
@@ -306,6 +322,8 @@ jobs:
     executor: node
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-deps]
       - attach_workspace:
           at: .
       - run:
@@ -344,6 +362,8 @@ jobs:
     executor: python
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-deps]
       - add_ssh_keys:
           fingerprints: ["8d:49:07:64:4b:26:46:e7:d6:3b:8c:6d:14:3a:1c:a8"]
       - attach_workspace:
