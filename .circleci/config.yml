@@ -96,16 +96,12 @@ jobs:
       - checkout
       - restore_cache:
           keys: [backend-deps]
-      - attach_workspace:
-          at: .
       - run:
           name: npm run build
-          working_directory: ./backend
-          command: npm run build
-      - persist_to_workspace:
-          root: .
-          paths:
-            - backend/dist
+          command: |
+             cd backend
+             npm install
+             npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-deps
@@ -417,15 +413,17 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text --filter Name=tag:Name,Values="backend-${CIRCLE_WORKFLOW_ID:0:7}")
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}"
-            if curl "${API_URL}/api/status" | grep "ok"
-            then
-                exit 0
-            else
-                exit 1
-            fi
+                export BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
+                  --query "Reservations[*].Instances[*].PublicIpAddress" \
+                  --output text)            
+                export API_URL="http://${BACKEND_PUBLIC_IP}:3030"
+                echo "${API_URL}/api/status"
+                if curl "${API_URL}/api/status" | grep "ok"
+                then
+                    exit 0
+                else
+                    exit 1
+                fi
       - run:
           name: Frontend Smoke Test.
           command: |
