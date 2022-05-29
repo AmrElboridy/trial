@@ -112,8 +112,6 @@ jobs:
       - checkout
       - restore_cache:
           keys: [frontend-deps]
-      - attach_workspace:
-          at: .
       - run:
           name: npm run build
           working_directory: ./frontend
