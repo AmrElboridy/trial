@@ -1,7 +1,11 @@
----
-  - name: Deploy and start udapeople backend server
+
+  ---
+  - name: deployment play then start udapeople backend server
     hosts: all
-    user: ubuntu
+    remote_user: ubuntu
+    become: true
+    become_method: sudo
+    become_user: root 
     gather_facts: false
     vars:
       - ansible_python_interpreter: /usr/bin/python3
