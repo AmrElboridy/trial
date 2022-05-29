@@ -392,7 +392,7 @@ jobs:
              export TYPEORM_MIGRATIONS=./migrations/*.ts
              cd .circleci/ansible
              cat inventory.txt
-             ansible-playbook -i inventory.txt deploy-server.yaml -vv
+             ansible-playbook -i inventory.txt deploy-server.yml -vv
       - destroy_environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
