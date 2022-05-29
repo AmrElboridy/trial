@@ -362,26 +362,37 @@ jobs:
     executor: python
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-deps]
       - add_ssh_keys:
           fingerprints: ["8d:49:07:64:4b:26:46:e7:d6:3b:8c:6d:14:3a:1c:a8"]
       - attach_workspace:
-          at: .
+          at: ~/
+      - restore_cache:
+          keys: [backend-deps]
       - run:
           name: Install dependencies
-          working_directory: /tmp
           command: |
             apk add --update ansible curl rsync openssh nodejs npm
             ansible --version
             pip install awscli
             aws --version
       - run:
-          name: Deploy backend
-          working_directory: ./.circleci/ansible
+          name: Packaging Backend
           command: |
-            cat inventory
-            ansible-playbook -i inventory deploy-server.yaml -vv
+             cd backend
+             npm i
+             npm run build
+             tar -czvf artifact.tar.gz dist/* package*
+             cd ..
+             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
+      - run:
+          name: Deploy backend
+          command: |
+             export TYPEORM_MIGRATIONS_DIR=./migrations
+             export TYPEORM_ENTITIES=./modules/domain/*/.entity{.ts,.js}
+             export TYPEORM_MIGRATIONS=./migrations/*.ts
+             cd .circleci/ansible
+             cat inventory.txt
+             ansible-playbook -i inventory.txt deploy-backend.yml -vv
       - destroy_environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
@@ -391,11 +402,11 @@ jobs:
 
 
   smoke-test:
-    executor: python
+- image: python:3.7-alpine3.11
     steps:
       - checkout
       - attach_workspace:
-          at: .
+          at: ~/
       - run:
           name: Install dependencies
           working_directory: /tmp
