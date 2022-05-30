@@ -11,10 +11,9 @@
  Deploying Working, Trustworthy Software
 
 	A- A public git repository with your project code. 
-			https://github.com/AmrElboridy/4-cicidevops.git
-
+      https://github.com/AmrElboridy/trial.git
 	B- Evidence of code-based CI/CD configuration in the form of yaml files in your git repository.
-			https://github.com/AmrElboridy/4-cicidevops.git
+      https://github.com/AmrElboridy/trial.git
 
 	C-Console output of various pre-deploy job failure scenarios:
 
@@ -25,9 +24,9 @@
 
 	D-Evidence in your code that:
 
-    		-- Compile errors have been fixed.		attached		
-                -- Unit tests have been fixed.			attached
-    		-- All critical security vulnerabilities caught by the “Analyze” job have been fixed.					attached
+    		        -- Compile errors have been fixed.	                                                        	attached		
+                -- Unit tests have been fixed.		                                                          	attached
+    	        	-- All critical security vulnerabilities caught by the “Analyze” job have been fixed.					attached
 
 ############################################################
 Utilize a configuration management tool to accomplish deployment to cloud-based servers. 
@@ -45,10 +44,12 @@ Utilize a configuration management tool to accomplish deployment to cloud-based 
 	F- Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
 
 	G- Evidence of deployed and functioning front-end application in an S3 bucket [URL02] 
-	https://s3.console.aws.amazon.com/s3/buckets/mrss3amrbueckrrrrret?region=us-east-1&tab=objects
+  http://udapeople-7d31626.s3-website-us-east-1.amazonaws.com
 	and in CloudFront. [URL03]
+  https://dg0cxzmns5x0k.cloudfront.net/
 
 	H- Evidence of healthy back-end application. [URL04]
+  http://18.208.222.209:3030/api/status
 
 
 
