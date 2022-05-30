@@ -41,24 +41,28 @@ commands:
   revert_migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
-      when:
+      Workflow_ID:
         type: string
-      id:
-        type: string
+        default: ${CIRCLE_WORKFLOW_ID:0:7}     
     steps:
       - run:
           name: Revert migrations
-          working_directory: ./backend
+          when: on_fail
           command: |
-            SUCCESS=$(curl -H "token: 2a9e15d6-b9fa-4b1f-a5dc-e3b9643a9b63" --request GET https://api.memstash.io/values/DB_MIGRATION_<< parameters.id >>)
-            echo $SUCCESS
-            if [[ "$SUCCESS" == "success" ]]
+            SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB}/migration_<< parameters.Workflow_ID >>)
+            # Logic for reverting the database state
+            if (( $SUCCESS == 1 ));
             then
-              pwd
-              ls -la
-              npm run migrations:revert
+              cd ~/project/backend
+              npm install
+              npm run migration:revert
             fi
-          when: << parameters.when >>
+
+
+
+
+
+
 
 
 jobs:
