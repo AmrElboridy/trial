@@ -60,8 +60,6 @@ commands:
             fi
           when: << parameters.when >>
 
-
-
 jobs:
 
   build-frontend:
