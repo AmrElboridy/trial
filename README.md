@@ -45,11 +45,11 @@ Utilize a configuration management tool to accomplish deployment to cloud-based 
 
 	G- Evidence of deployed and functioning front-end application in an S3 bucket [URL02] 
 
-  http://udapeople-1ebbb59.s3-website-us-east-1.amazonaws.com
+http://udapeople-efb5cf4.s3-website-us-east-1.amazonaws.com
 	and in CloudFront. [URL03]
 https://dg0cxzmns5x0k.cloudfront.net
 	H- Evidence of healthy back-end application. [URL04]
-  http://3.215.112.3:3030/api/status
+  http://34.228.168.149:3030/api/status
 
 
 
@@ -57,6 +57,7 @@ https://dg0cxzmns5x0k.cloudfront.net
 ##                      Section 3                       ##
 ##########################################################
 	A -Evidence of Prometheus Server. [URL05]
+	http://ec2-54-90-54-21.compute-1.amazonaws.com:9090/targets
 
 	B- Evidence that Prometheus is monitoring memory, cpu and disk usage of EC2 instances. [SCREENSHOT11]
 
