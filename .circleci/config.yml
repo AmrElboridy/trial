@@ -356,7 +356,8 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["8d:49:07:64:4b:26:46:e7:d6:3b:8c:6d:14:3a:1c:a8"]
       - attach_workspace:
-          at: ~/
+          at: .
+       #   at: ~/
       - restore_cache:
           keys: [backend-deps]
       - run:
