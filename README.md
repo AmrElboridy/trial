@@ -44,12 +44,12 @@ Utilize a configuration management tool to accomplish deployment to cloud-based 
 	F- Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
 
 	G- Evidence of deployed and functioning front-end application in an S3 bucket [URL02] 
-  http://udapeople-7d31626.s3-website-us-east-1.amazonaws.com
-	and in CloudFront. [URL03]
-  https://dg0cxzmns5x0k.cloudfront.net/
 
+  http://udapeople-1ebbb59.s3-website-us-east-1.amazonaws.com
+	and in CloudFront. [URL03]
+https://dg0cxzmns5x0k.cloudfront.net
 	H- Evidence of healthy back-end application. [URL04]
-  http://18.208.222.209:3030/api/status
+  http://3.215.112.3:3030/api/status
 
 
 
