@@ -17,7 +17,7 @@
       pause:
         seconds : 100
 
-    - name: Python Installed  .
+    - name: Python Installed
       apt:
         name: python
         state: present
