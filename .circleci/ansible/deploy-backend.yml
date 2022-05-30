@@ -1,5 +1,5 @@
 ---
-- name: Deployment play then then start udapeople backend server  
+- name: "deployment play." 
   hosts: web
   remote_user: ubuntu
   become: true
