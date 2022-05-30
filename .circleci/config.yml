@@ -85,9 +85,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-dependances
-      - slack/notify:
-          event: pass
-          template: basic_success_1
+
 
   test-frontend:
     docker:
@@ -147,9 +145,7 @@ jobs:
             npm audit fix --force --audit-level=critical 
             npm audit fix --force --audit-level=critical 
             npm audit --audit-level=critical 
-      - slack/notify:
-          event: pass
-          template: basic_success_1
+
 
   deploy-infrastructure:
     docker:
@@ -191,9 +187,7 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment:
           workflowId: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+
 
 
   configure-infrastructure:
@@ -220,9 +214,6 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           workflowId: ${CIRCLE_WORKFLOW_ID:0:7}
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
 
   run-migrations:
     docker:
@@ -255,10 +246,7 @@ jobs:
             fi
       - destroy-environment
       - revert-migrations
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-  
+
   deploy-frontend:
     docker:
       - image: python:3.7-alpine3.11
@@ -298,9 +286,7 @@ jobs:
 
       - destroy-environment
       - revert-migrations
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+
 
   deploy-backend:
     docker:
@@ -345,9 +331,7 @@ jobs:
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
+
 
   smoke-test:
     docker:
@@ -387,12 +371,7 @@ jobs:
 
       - destroy-environment
       - revert-migrations
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
+
 
   cloudfront-update:
     docker:
@@ -421,12 +400,7 @@ jobs:
 
       - destroy-environment
       - revert-migrations
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
+
 
   cleanup:
     docker:
@@ -449,9 +423,7 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
 
-      - slack/notify:
-          event: pass
-          template: basic_success_1
+
 
 
 workflows:
