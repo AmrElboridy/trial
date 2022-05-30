@@ -328,9 +328,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+  
 
 
   smoke-test:
