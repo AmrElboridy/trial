@@ -484,7 +484,7 @@ workflows:
            - scan-backend
          filters:
             branches:
-              only: [master]
+              only: [main]
       - configure-infrastructure:
          requires:
            - deploy-infrastructure
