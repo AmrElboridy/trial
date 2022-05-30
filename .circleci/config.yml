@@ -41,9 +41,10 @@ commands:
   revert_migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
-      Workflow_ID:
+      when:
         type: string
-        default: ${CIRCLE_WORKFLOW_ID:0:7}     
+      id:
+        type: string   
     steps:
       - run:
           name: Revert migrations
@@ -57,11 +58,7 @@ commands:
               npm install
               npm run migration:revert
             fi
-
-
-
-
-
+          when: << parameters.when >>
 
 
 
