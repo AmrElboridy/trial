@@ -3,20 +3,6 @@ orbs:
   slack: circleci/slack@4.10.1
 
 commands:
-  destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      workflowId:
-        type: string
-        default: ${CIRCLE_WORKFLOW_ID:0:7}
-    steps:
-      - run:
-          name: Destroy environments
-          when: on_fail
-          command: |
-            aws cloudformation delete-stack --stack-name "udapeople-backend-<< parameters.workflowId >>"
-            aws cloudformation delete-stack --stack-name "udapeople-front-end-<< parameters.workflowId >>"
-            aws s3 rm s3://udapeople-037284231276 --recursive
 
   awscli-v2-setup:
     description: Setup AWS Cli-Version 2 
@@ -28,25 +14,52 @@ commands:
             unzip awscliv2.zip
             sudo ./aws/install     
 
-  revert-migrations:
+  destroy_environment:
+    description: Destroy Cloud Formation Stacks and infrastructure
+    parameters:
+      when:
+        type: string
+      id:
+        type: string
+    steps:
+      - run:
+          name: Destroy udapeople backend cfn stack
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.id >>
+          environment:
+            TERM: xterm-256color
+          when: << parameters.when >>
+      - run:
+          name: Destroy udapeople frontend cfn stack and S3 bucket
+          command: |
+            aws s3 rm s3://udapeople-<< parameters.id >> --recursive
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.id >>
+          environment:
+              TERM: xterm-256color
+          when: << parameters.when >>
+
+  revert_migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
-      Workflow_ID:
+      when:
         type: string
-        default: ${CIRCLE_WORKFLOW_ID:0:7}     
+      id:
+        type: string
     steps:
       - run:
           name: Revert migrations
-          when: on_fail
+          working_directory: ./backend
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/${KVDB}/migration_<< parameters.Workflow_ID >>)
-            # Logic for reverting the database state
-            if (( $SUCCESS == 1 ));
+            SUCCESS=$(curl -H "token: 2a9e15d6-b9fa-4b1f-a5dc-e3b9643a9b63" --request GET https://api.memstash.io/values/DB_MIGRATION_<< parameters.id >>)
+            echo $SUCCESS
+            if [[ "$SUCCESS" == "success" ]]
             then
-              cd ~/project/backend
-              npm install
-              npm run migration:revert
+              pwd
+              ls -la
+              npm run migrations:revert
             fi
+          when: << parameters.when >>
+
 
 jobs:
 
@@ -453,16 +466,14 @@ workflows:
       - run-migrations:
           requires: 
             - configure-infrastructure
+
       - deploy-frontend:
-          requires: 
-            - run-migrations
+              requires: [run-migrations]
       - deploy-backend:
-          requires: 
-            - deploy-frontend
+              requires: [run-migrations]
       - smoke-test:
-          requires: 
-            - deploy-frontend
-            - deploy-backend
+              requires: [deploy-backend, deploy-frontend]
+
       - cloudfront-update:
           requires: 
             - smoke-test

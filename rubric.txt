@@ -10,11 +10,9 @@
 
  Deploying Working, Trustworthy Software
 
-	A- A public git repository with your project code. 
-			https://github.com/AmrElboridy/4-cicidevops.git
+	A- A public git repository with your project code. [URL01]
 
 	B- Evidence of code-based CI/CD configuration in the form of yaml files in your git repository.
-			https://github.com/AmrElboridy/4-cicidevops.git
 
 	C-Console output of various pre-deploy job failure scenarios:
 
@@ -25,9 +23,9 @@
 
 	D-Evidence in your code that:
 
-    		-- Compile errors have been fixed.		attached		
-                -- Unit tests have been fixed.			attached
-    		-- All critical security vulnerabilities caught by the “Analyze” job have been fixed.					attached
+    		-- Compile errors have been fixed.
+                -- Unit tests have been fixed.
+    		-- All critical security vulnerabilities caught by the “Analyze” job have been fixed.
 
 ############################################################
 Utilize a configuration management tool to accomplish deployment to cloud-based servers. 
@@ -44,9 +42,7 @@ Utilize a configuration management tool to accomplish deployment to cloud-based 
 
 	F- Evidence that deploy jobs only happen on master branch. [SCREENSHOT10]
 
-	G- Evidence of deployed and functioning front-end application in an S3 bucket [URL02] 
-	https://s3.console.aws.amazon.com/s3/buckets/mrss3amrbueckrrrrret?region=us-east-1&tab=objects
-	and in CloudFront. [URL03]
+	G- Evidence of deployed and functioning front-end application in an S3 bucket [URL02] and in CloudFront. [URL03]
 
 	H- Evidence of healthy back-end application. [URL04]
 
@@ -60,3 +56,7 @@ Utilize a configuration management tool to accomplish deployment to cloud-based 
 	B- Evidence that Prometheus is monitoring memory, cpu and disk usage of EC2 instances. [SCREENSHOT11]
 
 	C- Evidence that Prometheus and AlertManager send alerts when certain conditions exist in the EC2 instance. [SCREENSHOT12]
+
+
+
+
